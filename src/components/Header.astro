@@ -74,6 +74,11 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/blog">Tools</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
+		<div class="mobile-social-links">
+			<a href="https://github.com/HakimTaoufik" target="_blank" rel="noopener noreferrer">GitHub</a>
+			<a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">X</a>
+			<a href="mailto:al-hakim.taoufik@polytechnique.edu">Email</a>
+		</div>
 	</div>
 </header>
 
@@ -234,19 +239,44 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		flex-direction: column;
 	}
-	.mobile-menu a {
+	.mobile-links a {
 		display: block;
 		padding: 0.8em 0;
 		color: var(--text-muted);
 		text-decoration: none;
 		border-bottom: 1px solid var(--border);
 	}
-	.mobile-menu a:last-child {
+	.mobile-links a:last-child {
 		border-bottom: none;
 	}
-	.mobile-menu a.active {
+	.mobile-links a.active {
 		color: var(--accent);
 		font-weight: 700;
+	}
+	.mobile-social-links {
+		display: flex;
+		gap: 0.5em;
+		flex-wrap: wrap;
+		padding-top: 0.8em;
+		margin-top: 0.6em;
+		border-top: 1px solid var(--border);
+	}
+	.mobile-social-links a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.35em 0.65em;
+		font-size: 0.8em;
+		line-height: 1.2;
+		border: 1px solid var(--border-light);
+		border-radius: 999px;
+		color: var(--text-faint);
+		text-decoration: none;
+		transition: color 0.2s ease, border-color 0.2s ease;
+	}
+	.mobile-social-links a:hover {
+		color: var(--accent);
+		border-color: var(--accent);
 	}
 	.separator {
 		color: var(--border-light);
@@ -269,6 +299,9 @@ import HeaderLink from './HeaderLink.astro';
 		display: block;
 	}
 	@media (max-width: 720px) {
+		header {
+			margin-bottom: 0.75em;
+		}
 		.internal-links {
 			display: none;
 		}
