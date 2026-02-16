@@ -55,20 +55,77 @@ import HeaderLink from './HeaderLink.astro';
 					></path></svg
 				>
 			</button>
+			<button
+				id="menu-toggle"
+				class="menu-toggle"
+				type="button"
+				aria-label="Open navigation menu"
+				aria-controls="mobile-menu"
+				aria-expanded="false"
+			>
+				<span>Menu</span>
+			</button>
 		</div>
 	</nav>
+	<div id="mobile-menu" class="mobile-menu" hidden>
+		<div class="mobile-links">
+			<HeaderLink href="/">Home</HeaderLink>
+			<HeaderLink href="/projects">Projects</HeaderLink>
+			<HeaderLink href="/blog">Tools</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
+		</div>
+	</div>
 </header>
 
 <script is:inline>
 	(function () {
-		var btn = document.getElementById('theme-toggle');
-		if (!btn) return;
-		btn.addEventListener('click', function () {
-			var current = document.documentElement.getAttribute('data-theme') || 'dark';
-			var next = current === 'dark' ? 'light' : 'dark';
-			document.documentElement.setAttribute('data-theme', next);
-			localStorage.setItem('theme', next);
+		var themeBtn = document.getElementById('theme-toggle');
+		if (themeBtn) {
+			themeBtn.addEventListener('click', function () {
+				var current = document.documentElement.getAttribute('data-theme') || 'dark';
+				var next = current === 'dark' ? 'light' : 'dark';
+				document.documentElement.setAttribute('data-theme', next);
+				localStorage.setItem('theme', next);
+			});
+		}
+
+		var menuBtn = document.getElementById('menu-toggle');
+		var mobileMenu = document.getElementById('mobile-menu');
+		if (!menuBtn || !mobileMenu) return;
+
+		function closeMenu() {
+			menuBtn.setAttribute('aria-expanded', 'false');
+			menuBtn.setAttribute('aria-label', 'Open navigation menu');
+			mobileMenu.setAttribute('hidden', '');
+		}
+
+		menuBtn.addEventListener('click', function () {
+			var expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+			if (expanded) {
+				closeMenu();
+				return;
+			}
+
+			menuBtn.setAttribute('aria-expanded', 'true');
+			menuBtn.setAttribute('aria-label', 'Close navigation menu');
+			mobileMenu.removeAttribute('hidden');
 		});
+
+		mobileMenu.querySelectorAll('a').forEach(function (link) {
+			link.addEventListener('click', closeMenu);
+		});
+
+		var desktopBreakpoint = window.matchMedia('(min-width: 721px)');
+		var resetOnDesktop = function (event) {
+			if (event.matches) {
+				closeMenu();
+			}
+		};
+		if (desktopBreakpoint.addEventListener) {
+			desktopBreakpoint.addEventListener('change', resetOnDesktop);
+		} else {
+			desktopBreakpoint.addListener(resetOnDesktop);
+		}
 	})();
 </script>
 
@@ -93,6 +150,10 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+	.internal-links {
+		display: flex;
+		align-items: center;
 	}
 	nav a {
 		padding: 1em 0.5em;
@@ -141,9 +202,51 @@ import HeaderLink from './HeaderLink.astro';
 		font: inherit;
 		line-height: 0;
 	}
+	.menu-toggle {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		color: var(--text-faint);
+		padding: 0.5em 0.65em;
+		margin-left: 0.35em;
+		border: 1px solid var(--border-light);
+		border-radius: 6px;
+		background: none;
+		cursor: pointer;
+		transition: color 0.2s ease, border-color 0.2s ease;
+		font: inherit;
+		font-size: 0.8em;
+		line-height: 1;
+	}
+	.menu-toggle:hover,
+	.menu-toggle[aria-expanded='true'] {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
 	.icon-links a:hover,
 	#theme-toggle:hover {
 		color: var(--accent);
+	}
+	.mobile-menu {
+		display: none;
+	}
+	.mobile-links {
+		display: flex;
+		flex-direction: column;
+	}
+	.mobile-menu a {
+		display: block;
+		padding: 0.8em 0;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid var(--border);
+	}
+	.mobile-menu a:last-child {
+		border-bottom: none;
+	}
+	.mobile-menu a.active {
+		color: var(--accent);
+		font-weight: 700;
 	}
 	.separator {
 		color: var(--border-light);
@@ -166,10 +269,28 @@ import HeaderLink from './HeaderLink.astro';
 		display: block;
 	}
 	@media (max-width: 720px) {
+		.internal-links {
+			display: none;
+		}
 		.icon-links a {
 			display: none;
 		}
 		.separator {
+			display: none;
+		}
+		#theme-toggle svg {
+			width: 24px;
+			height: 24px;
+		}
+		.menu-toggle {
+			display: inline-flex;
+		}
+		.mobile-menu {
+			display: block;
+			border-top: 1px solid var(--border);
+			padding: 0 0.1em 0.5em;
+		}
+		.mobile-menu[hidden] {
 			display: none;
 		}
 	}
