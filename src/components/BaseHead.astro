@@ -13,15 +13,28 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const assetBase = import.meta.env.BASE_URL;
+const faviconVersion = '20260216';
 
 const { title, description, image = FallbackImage } = Astro.props;
 ---
 
+<!-- Theme (runs before paint to prevent flash) -->
+<script is:inline>
+	(function () {
+		const stored = localStorage.getItem('theme');
+		const theme = stored || 'dark';
+		document.documentElement.setAttribute('data-theme', theme);
+	})();
+</script>
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" href={`${assetBase}favicon.ico?v=${faviconVersion}`} sizes="any" />
+<link rel="shortcut icon" href={`${assetBase}favicon.ico?v=${faviconVersion}`} />
+<link rel="icon" type="image/svg+xml" href={`${assetBase}favicon.ico?v=${faviconVersion}`} />
+<link rel="apple-touch-icon" href={`${assetBase}favicon.png?v=${faviconVersion}`} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"

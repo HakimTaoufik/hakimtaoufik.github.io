@@ -1,63 +1,318 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="Education, experience, and selected projects." />
+		<style>
+			main {
+				width: 1240px;
+			}
+			.about-content {
+				line-height: 1.8;
+			}
+			.about-content h1 {
+				margin-bottom: 0.45em;
+			}
+			.lead {
+				max-width: 940px;
+				color: var(--text-secondary);
+				font-size: 1.08em;
+				margin-bottom: 2.2em;
+			}
+			.section {
+				display: grid;
+				grid-template-columns: 210px 1fr;
+				gap: 2.4em;
+				padding: 2.2em 0;
+				border-top: 1px solid var(--border);
+			}
+			.section-label {
+				margin: 0;
+				font-size: 0.82em;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				padding-top: 0.3em;
+			}
+			.entries {
+				display: grid;
+				gap: 1.7em;
+			}
+			.entry {
+				position: relative;
+				padding-left: 1.1em;
+			}
+			.entry::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0.35em;
+				bottom: 0.25em;
+				width: 2px;
+				background: linear-gradient(var(--accent-muted), transparent);
+			}
+			.entry-head {
+				display: flex;
+				justify-content: space-between;
+				gap: 1em;
+				flex-wrap: wrap;
+				margin-bottom: 0.35em;
+			}
+			.entry-title {
+				margin: 0;
+				color: var(--text);
+				font-size: 1.08em;
+				line-height: 1.35;
+				font-style: italic;
+				font-weight: 700;
+				letter-spacing: 0.01em;
+				display: inline-block;
+				position: relative;
+			}
+			.entry-title::after {
+				content: '';
+				display: block;
+				width: 46%;
+				height: 1px;
+				margin-top: 0.15em;
+				background: linear-gradient(90deg, var(--accent-muted), transparent);
+				opacity: 0.75;
+			}
+			.entry-subtitle {
+				margin: 0;
+				color: var(--accent-muted);
+				font-size: 0.95em;
+				font-style: italic;
+				letter-spacing: 0.015em;
+				opacity: 0.95;
+			}
+			.entry-date {
+				color: var(--text-faint);
+				font-size: 0.9em;
+			}
+			.entry p {
+				margin: 0.3em 0 0;
+				color: var(--text-secondary);
+			}
+			.entry ul {
+				margin: 0.45em 0 0;
+				padding-left: 1.1em;
+			}
+			.entry li {
+				margin-bottom: 0.32em;
+			}
+			.list-clean {
+				margin: 0;
+				padding-left: 1.1em;
+			}
+			.list-clean li {
+				margin-bottom: 0.35em;
+			}
+			.language-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 0.35em 0.9em;
+				max-width: 980px;
+			}
+			.language-item {
+				display: inline-flex;
+				align-items: baseline;
+				gap: 0.45em;
+			}
+			.language-item:not(:last-child)::after {
+				content: '•';
+				margin-left: 0.45em;
+				color: var(--text-faint);
+			}
+			.language-name {
+				color: var(--text);
+				font-weight: 700;
+				font-size: 0.96em;
+			}
+			.language-level {
+				color: var(--text-muted);
+				font-size: 0.9em;
+				white-space: nowrap;
+			}
+			@media (max-width: 900px) {
+				main {
+					width: 720px;
+				}
+				.section {
+					grid-template-columns: 1fr;
+					gap: 0.9em;
+					padding: 1.6em 0;
+				}
+				.section-label {
+					padding-top: 0;
+				}
+				.language-list {
+					gap: 0.25em 0.7em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="about-content">
+				<h1>About Me</h1>
+				<p class="lead">
+					I am Al Hakim Taoufik, an Ecole Polytechnique student specializing in machine learning,
+					statistics, and computer science. I focus on connecting rigorous mathematical foundations
+					with practical software implementation.
+				</p>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+				<section class="section">
+					<h2 class="section-label">Education</h2>
+					<div class="entries">
+						<div class="entry">
+							<div class="entry-head">
+								<div>
+									<p class="entry-title">Ecole Polytechnique (l'X) - France</p>
+									<p class="entry-subtitle">Applied Mathematics Engineering Degree</p>
+								</div>
+								<span class="entry-date">Sept 2023 - July 2026</span>
+							</div>
+							<p>
+								Relevant coursework: advanced statistical learning, reinforcement learning,
+								deep learning, optimization and control, Markov chains and MDP, Monte Carlo methods,
+								signal processing, algorithms, and data science.
+							</p>
+						</div>
+						<div class="entry">
+							<div class="entry-head">
+								<div>
+									<p class="entry-title">Lycee Mohamed VI d'Excellence (Lydex) - Morocco</p>
+									<p class="entry-subtitle">Preparatory classes MPSI - MP*</p>
+								</div>
+								<span class="entry-date">Sept 2021 - July 2023</span>
+							</div>
+							<ul>
+								<li>Two years of intensive mathematics and physics preparation.</li>
+								<li>Admission to Ecole Polytechnique (rank 32), CentraleSupelec (rank 12), and ENS Paris-Saclay.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+				<section class="section">
+					<h2 class="section-label">Experience</h2>
+					<div class="entries">
+						<div class="entry">
+							<div class="entry-head">
+								<div>
+									<p class="entry-title">Incoming ML Research Engineer Intern - Dassault Systemes</p>
+									<p class="entry-subtitle">Velizy, France</p>
+								</div>
+								<span class="entry-date">Mar 2026 - Aug 2026</span>
+							</div>
+							<ul>
+								<li>Researching and benchmarking LLM/VLM architectures for multimodal clinical report synthesis.</li>
+								<li>Training generative AI models to aggregate heterogeneous oncology data into structured summaries.</li>
+								<li>Developing custom evaluation frameworks for accuracy and clinical relevance.</li>
+							</ul>
+						</div>
+						<div class="entry">
+							<div class="entry-head">
+								<div>
+									<p class="entry-title">Software Engineer Intern - Harmattan AI</p>
+									<p class="entry-subtitle">Paris, France</p>
+								</div>
+								<span class="entry-date">June 2025 - September 2025</span>
+							</div>
+							<ul>
+								<li>Built a cloud API using AI (Qwen3-0.6b + pre-trained NLP) to classify sales emails and integrated it with the CRM.</li>
+								<li>Designed and deployed a cloud database for the computer vision team on Google Cloud Platform.</li>
+								<li>Automated payroll, Confluence extraction via TUI, and ERP manufacturing workflows.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+				<section class="section">
+					<h2 class="section-label">Projects</h2>
+					<div class="entries">
+						<div class="entry">
+							<div class="entry-head">
+								<p class="entry-title">Evaluation of Aerodynamic Forces by AI (Airbus Helicopters)</p>
+								<span class="entry-date">May 2024 - June 2025</span>
+							</div>
+							<p>
+								Developed ML models to predict aerodynamic impacts of helicopter add-ons using CFD and
+								wind-tunnel data, reducing full CFD costs and turnaround time.
+							</p>
+						</div>
+						<div class="entry">
+							<div class="entry-head">
+								<p class="entry-title">Twitter Influencer or Observer Prediction (Ecole Polytechnique)</p>
+								<span class="entry-date">Sept 2025 - Dec 2025</span>
+							</div>
+							<p>
+								Curated Twitter API data and built deep learning models with attention mechanisms and
+								fine-tuned BERT to classify user influence during the COVID-19 period.
+							</p>
+						</div>
+						<div class="entry">
+							<div class="entry-head">
+								<p class="entry-title">Adaptive Traffic Lights with Q-Learning (Lydex)</p>
+								<span class="entry-date">Jan 2022 - Apr 2023</span>
+							</div>
+							<p>
+								Modeled an intersection as an MDP, implemented Q-learning, and compared adaptive signal
+								control against fixed-time baselines through simulation.
+							</p>
+						</div>
+					</div>
+				</section>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+				<section class="section">
+					<h2 class="section-label">Awards</h2>
+					<div class="entries">
+						<ul class="list-clean">
+							<li>1st place at regional Mathematics Olympiads (Grand Casablanca, Morocco).</li>
+							<li>Competed in National Mathematics Olympiads (IMO preparation track).</li>
+							<li>Awarded Mohamed VI Scholarship for excellence.</li>
+							<li>Awarded merit scholarship at Ecole Polytechnique by Moroccan and French governments.</li>
+						</ul>
+					</div>
+				</section>
+
+				<section class="section">
+					<h2 class="section-label">Languages</h2>
+					<div class="entries">
+						<ul class="language-list">
+							<li class="language-item">
+								<span class="language-name">Arabic</span>
+								<span class="language-level">Native</span>
+							</li>
+							<li class="language-item">
+								<span class="language-name">French</span>
+								<span class="language-level">Native</span>
+							</li>
+							<li class="language-item">
+								<span class="language-name">English</span>
+								<span class="language-level">C2</span>
+							</li>
+							<li class="language-item">
+								<span class="language-name">Spanish</span>
+								<span class="language-level">B1</span>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
